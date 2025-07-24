@@ -3,5 +3,8 @@
 
 int main ()
 {
-    printf("%d", BUFFER_SIZE);
+    char buf[BUFFER_SIZE];
+    int fd = open("a.txt", O_RDWR, 0777);
+    read(fd, buf, BUFFER_SIZE);
+    printf("%s", buf);
 }
