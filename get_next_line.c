@@ -2,11 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void save_after_n(char *str, char **temp)
-{
-    *temp = ft_strchr(str, '\n');
-}
-
 char *read_line(char *str)
 {
     int i;
@@ -17,12 +12,13 @@ char *read_line(char *str)
     i = 0;
     destsize = ft_strlen(str);
     line = malloc(destsize + 2);
-    while (str[i] != '\n')
+    while (str[i] && str[i] != '\n')
     {
         line[i] = str[i];
         i++; 
     }
     line[i] = '\n';
+    line[i + 1] = '\0';
     return line;
 }
 
@@ -40,6 +36,7 @@ char *read_to_n(int fd)
     while ((find_n((line) , '\n') != 1) && read_size != 0)
     {
         read_size = read(fd, buf, BUFFER_SIZE);
+        buf[read_size] = '\0';
         line = ft_strjoin(line, (char *)buf);
         if (ft_strchr(line, '\n'))
         {
@@ -47,11 +44,9 @@ char *read_to_n(int fd)
         }
         else if (read_size == 0)
         {
-            printf("sa");
             return line;
         }
     }
-    printf("\nTEMP %s\n", temp);
     return (line);
 }
 
@@ -72,7 +67,8 @@ char *get_next_line(int fd)
 int main ()
 {
     int fd = open("string.txt", O_RDWR, 0777);
-    printf("ÇIKTI%s", get_next_line(fd));
-    printf("ÇIKTI%s", get_next_line(fd));
-    printf("ÇIKTI%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd));
 }
