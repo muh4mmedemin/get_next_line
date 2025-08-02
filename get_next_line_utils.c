@@ -74,7 +74,8 @@ char	*ft_strchr(char const *s, int c)
 	{
 		if (s[i] == uc)
 		{
-			return ((char *)s + i + 1);
+			i++;
+			return ((char *)s + i);
 		}
 		i++;
 	}
