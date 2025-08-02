@@ -6,7 +6,7 @@
 /*   By: muayna <muayna@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 19:21:11 by muayna            #+#    #+#             */
-/*   Updated: 2025/08/02 10:08:22 by muayna           ###   ########.fr       */
+/*   Updated: 2025/08/02 13:45:32 by muayna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,14 @@ char *read_line(char *str)
     destsize = i;
     if(str[destsize] == '\n')
         destsize++;
-    //printf("cc%dcc", destsize);
     i = 0;
     if (str == NULL || destsize == 0)
-    {
         return NULL;   
-    }
     line = malloc(destsize + 1);
     while (str[i] && str[i] != '\n')
     {
         line[i] = str[i];
-        //printf("LİNE %s LİNE", line);
         i++; 
-        //printf("ww%dww", i);
     }
     line[i] = '\n';
     line[i + 1] = '\0';
@@ -51,19 +46,27 @@ char *read_to_n(int fd)
     char *line;
     char buf[BUFFER_SIZE + 1];
     static char *temp;
+    char *old_line;
     int read_size;
+
+
+    
     read_size = 1;
     line = ft_strdup("");
     if(temp)
     {
+        old_line = line;
         line = ft_strjoin(line, temp);
-        temp = NULL;
+        free(old_line);
     }
-    while (!(ft_strchr(line, '\n')) || read_size != 0)
+    temp = NULL;
+    while (!(ft_strchr(line, '\n')))
     {
         read_size = read(fd, buf, BUFFER_SIZE);
         buf[read_size] = '\0';
+        old_line = line;
         line = ft_strjoin(line, (char *)buf);
+        free(old_line);
         if (ft_strchr(line, '\n'))
             temp = ft_strchr(line, '\n');
         else if (read_size == 0)
@@ -76,7 +79,13 @@ char *read_to_n(int fd)
 
 char *get_next_line(int fd)
 {
-    return read_line(read_to_n(fd));
+    if (fd == 0 || fd < 0)
+        return NULL;
+    char *s;
+    char *t;
+    s = read_to_n(fd);
+    t = read_line(s);
+    return t;
 }
 // line = 1234567890
 // line static char !!
@@ -92,12 +101,27 @@ int main ()
     int fd = open("string.txt", O_RDWR, 0777);
     char *s = get_next_line(fd);
     printf("%s", s);
+    free(s);
     s = get_next_line(fd);
     printf("%s", s);
+    free(s);
     s = get_next_line(fd);
     printf("%s", s);
+    free(s);
     s = get_next_line(fd);
     printf("%s", s);
+    free(s);
         s = get_next_line(fd);
     printf("%s", s);
+    free(s);
+    s = get_next_line(fd);
+    printf("%s", s);
+    free(s);
+    s = get_next_line(fd);
+    printf("%s", s);
+    free(s);
+    s = get_next_line(fd);
+    printf("%s", s);
+    free(s);
+    close(fd);
 }
