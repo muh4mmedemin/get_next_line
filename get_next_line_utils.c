@@ -6,7 +6,7 @@
 /*   By: muayna <muayna@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:43:53 by muayna            #+#    #+#             */
-/*   Updated: 2025/08/07 12:41:31 by muayna           ###   ########.fr       */
+/*   Updated: 2025/08/08 14:31:27 by muayna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,3 @@ char	*ft_strdup(const char *s)
 	newstr[srcsize] = '\0';
 	return (newstr);
 }
-
