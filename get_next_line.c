@@ -6,7 +6,7 @@
 /*   By: muayna <muayna@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 00:13:04 by muayna            #+#    #+#             */
-/*   Updated: 2025/08/10 00:19:37 by muayna           ###   ########.fr       */
+/*   Updated: 2025/08/10 07:03:22 by muayna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ char	*read_file(int fd, char **temp)
 	while (1)
 	{
 		read_size = read(fd, buf, BUFFER_SIZE);
+		if (buf == NULL || read_size < 0)
+			return (NULL);
 		buf[read_size] = '\0';
 		line = ft_strjoin(line, buf);
 		if (ft_strchr(line, '\n') || read_size < BUFFER_SIZE)
-		{
-			free(buf);
-			return (line);
-		}
+			break ;
 	}
+	free(buf);
 	return (line);
 }
 
@@ -91,6 +91,8 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = read_file(fd, &temp);
+	if (line == NULL)
+		return (NULL);
 	if (line[0] == '\0')
 	{
 		free(line);
