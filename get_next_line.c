@@ -6,13 +6,13 @@
 /*   By: muayna <muayna@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 00:13:04 by muayna            #+#    #+#             */
-/*   Updated: 2025/08/10 07:03:22 by muayna           ###   ########.fr       */
+/*   Updated: 2025/08/18 16:33:02 by muayna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	find_after_n(char *line, char **t)
+static void	find_after_n(char *line, char **t)
 {
 	char	*n;
 	int		i;
@@ -32,7 +32,7 @@ void	find_after_n(char *line, char **t)
 	(*t)[i] = '\0';
 }
 
-char	*extract_line(char *line)
+static char	*extract_line(char *line)
 {
 	char	*new_line;
 	int		count_line;
@@ -53,7 +53,7 @@ char	*extract_line(char *line)
 	return (new_line);
 }
 
-char	*read_file(int fd, char **temp)
+static char	*read_file(int fd, char **temp)
 {
 	char	*buf;
 	char	*line;
