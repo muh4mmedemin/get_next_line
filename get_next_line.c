@@ -6,11 +6,40 @@
 /*   By: muayna <muayna@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:43:47 by muayna            #+#    #+#             */
-/*   Updated: 2025/12/22 18:12:14 by muayna           ###   ########.fr       */
+/*   Updated: 2025/12/25 18:08:57 by muayna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static char	*ft_strjoin_free_s1(char *s1, char const *s2)
+{
+	int		i;
+	int		b;
+	char	*newstr;
+	int		totalstr;
+
+	b = 0;
+	i = 0;
+	totalstr = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	newstr = malloc(totalstr + 1);
+	if (newstr == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		newstr[i] = s1[i];
+		i++;
+	}
+	while (s2[b])
+	{
+		newstr[i] = s2[b];
+		b++;
+		i++;
+	}
+	newstr[i] = '\0';
+	free(s1);
+	return (newstr);
+}
 
 static void	save_after_n(char *line, char *temp)
 {
@@ -60,14 +89,14 @@ static char	*read_file(int fd, char *temp)
 	read_size = 1;
 	if (temp[0] != '\0')
 	{
-		line = ft_strjoin(line, temp);
+		line = ft_strjoin_free_s1(line, temp);
 		temp[0] = '\0';
 	}
 	while (1)
 	{
 		read_size = read(fd, buf, BUFFER_SIZE);
 		buf[read_size] = '\0';
-		line = ft_strjoin(line, buf);
+		line = ft_strjoin_free_s1(line, buf);
 		if (read_size < BUFFER_SIZE)
 			return (line);
 		if (ft_strchr(line, '\n'))
